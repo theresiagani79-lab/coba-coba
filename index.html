@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Lore Quest: Inclusive Narrative Game</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Dyslexic&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                        },
+                        kebinekaan: {
+                            gold: '#f59e0b',
+                            emerald: '#10b981',
+                            purple: '#8b5cf6',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        dyslexic: ['OpenDyslexic', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dyslexia-font {
+            font-family: 'OpenDyslexic', 'Courier New', monospace !important;
+            letter-spacing: 0.05em;
+            word-spacing: 0.1em;
+            line-height: 1.8;
+        }
+        .high-contrast {
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+        }
+        .high-contrast button, .high-contrast .card-element {
+            border: 2px solid #ffff00 !important;
+            background-color: #111111 !important;
+            color: #ffff00 !important;
+        }
+        .high-contrast .bg-slate-800, .high-contrast .bg-white {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+        .text-size-sm { font-size: 0.9rem; }
+        .text-size-md { font-size: 1.05rem; }
+        .text-size-lg { font-size: 1.2rem; }
+        .text-size-xl { font-size: 1.35rem; }
+        
+        .pulse-subtle {
+            animation: pulseSubtle 2s infinite;
+        }
+        @keyframes pulseSubtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.95; transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen font-sans transition-all duration-300" id="mainBody">
+
+    <!-- TOP PID ACCESSIBILITY BAR -->
+    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-amber-500 to-indigo-600 p-2 rounded-lg text-white font-bold text-xl">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wide flex items-center gap-2">
+                        Nusantara Lore Quest
+                        <span class="text-xs bg-indigo-500 text-white px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">PID Inclusive</span>
+                    </h1>
+                    <p class="text-xs text-slate-300">Class XII English Narrative & Cultural Diversity</p>
+                </div>
+            </div>
+
+            <!-- Accessibility Toolbar -->
+            <div class="flex items-center flex-wrap gap-2 text-xs bg-slate-800 p-1.5 rounded-xl border border-slate-700">
+                <span class="text-slate-400 font-semibold px-2 flex items-center gap-1">
+                    <i class="fa-solid fa-universal-access text-amber-400"></i> Accessibility:
+                </span>
+                
+                <!-- Font Size Selector -->
+                <div class="flex bg-slate-700 rounded-lg p-0.5">
+                    <button onclick="changeFontSize('sm')" class="px-2 py-1 rounded hover:bg-slate-600 font-bold" title="Small Text">A-</button>
+                    <button onclick="changeFontSize('md')" class="px-2 py-1 rounded hover:bg-slate-600 font-bold bg-slate-600" id="btnFontMd">A</button>
+                    <button onclick="changeFontSize('lg')" class="px-2 py-1 rounded hover:bg-slate-600 font-bold" title="Large Text">A+</button>
+                    <button onclick="changeFontSize('xl')" class="px-2 py-1 rounded hover:bg-slate-600 font-bold" title="Extra Large Text">A++</button>
+                </div>
+
+                <!-- Dyslexia Font Toggle -->
+                <button onclick="toggleDyslexiaFont()" id="dyslexiaBtn" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg flex items-center gap-1 font-medium transition">
+                    <i class="fa-solid fa-font"></i> Dyslexic Font
+                </button>
+
+                <!-- High Contrast Toggle -->
+                <button onclick="toggleHighContrast()" id="contrastBtn" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg flex items-center gap-1 font-medium transition">
+                    <i class="fa-solid fa-circle-half-stroke"></i> Contrast
+                </button>
+
+                <!-- Audio TTS Toggle -->
+                <button onclick="toggleTextToSpeech()" id="ttsBtn" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-600 text-white rounded-lg flex items-center gap-1 font-medium transition">
+                    <i class="fa-solid fa-volume-high"></i> TTS Audio
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+
+        <!-- STUDENT PROGRESS & SCOREBOARD -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 mb-6 flex flex-wrap items-center justify-between gap-4 card-element">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-semibold uppercase">Learner Badge</div>
+                    <div id="badgeText" class="text-base font-bold text-slate-800">Cultural Explorer 🌟</div>
+                </div>
+            </div>
+
+            <!-- Score Cards -->
+            <div class="flex items-center gap-6">
+                <div class="text-center">
+                    <span class="text-xs text-slate-500 block font-semibold">Total Points</span>
+                    <span id="scoreDisplay" class="text-2xl font-extrabold text-indigo-600">0</span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div class="text-center">
+                    <span class="text-xs text-slate-500 block font-semibold">Kebinekaan Stars</span>
+                    <div id="starContainer" class="flex gap-1 text-amber-400 text-lg">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div>
+                    <button onclick="openModal('guideModal')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-question text-indigo-500"></i> How to Play
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STORY SELECTION & STAGE TABS -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <!-- Story Picker Card -->
+            <div class="md:col-span-1 bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-5 rounded-2xl shadow-md flex flex-col justify-between">
+                <div>
+                    <span class="text-xs text-amber-400 font-bold uppercase tracking-wider block mb-1">Active Folklore</span>
+                    <select id="folkloreSelect" onchange="switchFolklore()" class="w-full bg-slate-800 text-white font-semibold p-2.5 rounded-xl border border-slate-700 text-sm focus:ring-2 focus:ring-indigo-400 outline-none">
+                        <option value="toba">Lake Toba (North Sumatra)</option>
+                        <option value="malin">Malin Kundang (West Sumatra)</option>
+                        <option value="timun">Timun Mas (Central Java)</option>
+                    </select>
+                    <p id="folkloreSummary" class="text-xs text-slate-300 mt-3 leading-relaxed">
+                        A tale of promise, nature, and respect from North Sumatra.
+                    </p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                    <span>Region: <strong id="folkloreRegion" class="text-amber-300">Sumatra</strong></span>
+                    <button onclick="speakText(document.getElementById('folkloreSummary').innerText)" class="text-amber-400 hover:text-amber-300" title="Listen Summary">
+                        <i class="fa-solid fa-volume-high"></i> Listen
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stage Navigation Tabs -->
+            <div class="md:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button onclick="switchStage(1)" id="tabStage1" class="stage-tab active p-3 bg-white rounded-2xl border-2 border-indigo-500 text-left transition hover:shadow-md card-element">
+                    <span class="text-xs font-bold text-indigo-600 block">STAGE 1</span>
+                    <span class="font-bold text-sm text-slate-800 block">Generic Structure</span>
+                    <span class="text-[10px] text-slate-500">Orientation & Resolution</span>
+                </button>
+                <button onclick="switchStage(2)" id="tabStage2" class="stage-tab p-3 bg-white rounded-2xl border-2 border-transparent text-left transition hover:shadow-md card-element">
+                    <span class="text-xs font-bold text-slate-400 block">STAGE 2</span>
+                    <span class="font-bold text-sm text-slate-800 block">Grammar Hunt</span>
+                    <span class="text-[10px] text-slate-500">Past Tense & Action Verbs</span>
+                </button>
+                <button onclick="switchStage(3)" id="tabStage3" class="stage-tab p-3 bg-white rounded-2xl border-2 border-transparent text-left transition hover:shadow-md card-element">
+                    <span class="text-xs font-bold text-slate-400 block">STAGE 3</span>
+                    <span class="font-bold text-sm text-slate-800 block">Kebinekaan Value</span>
+                    <span class="text-[10px] text-slate-500">Empathy & Diversity</span>
+                </button>
+                <button onclick="switchStage(4)" id="tabStage4" class="stage-tab p-3 bg-white rounded-2xl border-2 border-transparent text-left transition hover:shadow-md card-element">
+                    <span class="text-xs font-bold text-slate-400 block">STAGE 4</span>
+                    <span class="font-bold text-sm text-slate-800 block">AI Story Weaver</span>
+                    <span class="text-[10px] text-slate-500">Create Inclusive Twist</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- STAGE 1: GENERIC STRUCTURE MATCHING -->
+        <section id="stage1Content" class="stage-content space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 card-element">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-puzzle-piece text-indigo-500"></i> Stage 1: Match the Narrative Structure
+                        </h2>
+                        <p class="text-xs text-slate-500">Read the story paragraphs below and assign the correct Narrative Structure stage.</p>
+                    </div>
+                    <button onclick="speakCurrentStageStory()" class="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-volume-high"></i> Read Story Aloud
+                    </button>
+                </div>
+
+                <!-- Interactive Paragraph Blocks -->
+                <div id="paragraphMatchContainer" class="space-y-4">
+                    <!-- Dynamic rendering via JavaScript -->
+                </div>
+
+                <div class="mt-6 flex justify-end">
+                    <button onclick="checkStage1Answers()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> Validate Structure Match
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 2: GRAMMAR & ACTION VERB HUNT -->
+        <section id="stage2Content" class="stage-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 card-element">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Stage 2: Past Tense & Action Verbs Hunt
+                        </h2>
+                        <p class="text-xs text-slate-500">Click on all the **Action Verbs (Past Tense)** in the paragraph below to unlock grammar mastery points!</p>
+                    </div>
+                    <div class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-lg">
+                        Verbs Found: <span id="verbCounter">0</span> / <span id="verbTarget">0</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Text Container -->
+                <div id="grammarInteractiveBox" class="p-5 bg-slate-50 rounded-xl border border-slate-200 text-slate-800 leading-relaxed text-base font-medium selection:bg-amber-200">
+                    <!-- Words dynamically rendered as clickable spans -->
+                </div>
+
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <div class="text-xs text-slate-500 flex items-center gap-2">
+                        <span class="w-3 h-3 bg-emerald-400 rounded-full inline-block"></span> Correct Verb
+                        <span class="w-3 h-3 bg-rose-400 rounded-full inline-block ml-2"></span> Incorrect Selection
+                    </div>
+                    <button onclick="checkStage2Grammar()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-flag-checkered"></i> Complete Grammar Challenge
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 3: KEBINEKAAN & CULTURAL VALUES -->
+        <section id="stage3Content" class="stage-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 card-element">
+                <div class="mb-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-hand-holding-heart text-rose-500"></i> Stage 3: Kebinekaan & Empathy Compass
+                    </h2>
+                    <p class="text-xs text-slate-500">Reflect on how this legend teaches us mutual respect, tolerance, and inclusive values in Indonesia.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" id="moralQuestionCards">
+                    <!-- Dynamically populated reflection questions -->
+                </div>
+
+                <!-- Reflection Essay / Speech Input -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <label for="studentReflection" class="block text-sm font-bold text-slate-700 mb-1">
+                        Inclusion Reflection Task (English Class XII)
+                    </label>
+                    <p class="text-xs text-slate-500 mb-2">Write 2-3 sentences explaining what moral lesson from this legend can help build a more tolerant and inclusive community today.</p>
+                    <textarea id="studentReflection" rows="3" class="w-full p-3 rounded-xl border border-slate-300 text-slate-800 text-sm focus:ring-2 focus:ring-rose-400 outline-none" placeholder="Type your reflection here or use speech input..."></textarea>
+                    
+                    <div class="mt-2 flex justify-between items-center">
+                        <button onclick="startSpeechToText()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+                            <i class="fa-solid fa-microphone text-rose-500"></i> Speech-to-Text
+                        </button>
+                        <button onclick="submitReflection()" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition">
+                            Submit Reflection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAGE 4: AI INCLUSIVE STORY WEAVER -->
+        <section id="stage4Content" class="stage-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 card-element">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-feather-pointed text-purple-600"></i> Stage 4: Inclusive Story Weaver (Gemini AI Powered)
+                        </h2>
+                        <p class="text-xs text-slate-500">Re-write or re-imagine the end of the folklore to promote inclusion, forgiveness, or peace!</p>
+                    </div>
+                    <span class="text-xs bg-purple-100 text-purple-700 font-bold px-2.5 py-1 rounded-full">AI Co-Creator</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Controls -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Select an Inclusive Alternate Ending Focus:</label>
+                            <select id="aiThemeSelect" class="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-purple-400">
+                                <option value="forgiveness">A path of empathy and family forgiveness</option>
+                                <option value="disability_acceptance">Accepting individuals with different physical or cognitive abilities</option>
+                                <option value="environmental_harmony">Living in harmony with nature and different cultural tribes</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Your Custom Plot Prompt / Idea (Optional):</label>
+                            <input type="text" id="aiCustomPrompt" placeholder="e.g. Malin Kundang apologizes and helps the village build a school..." class="w-full p-2.5 bg-slate-50 rounded-xl border border-slate-300 text-xs text-slate-800 outline-none focus:ring-2 focus:ring-purple-400">
+                        </div>
+
+                        <button onclick="generateAIInclusiveEnding()" id="btnGenerateAI" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Inclusive Story Version
+                        </button>
+                    </div>
+
+                    <!-- AI Result Output -->
+                    <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <span class="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-2">Generated Narrative Alternate Ending:</span>
+                            <div id="aiStoryOutput" class="text-xs text-slate-700 leading-relaxed italic">
+                                Choose an inclusive focus above and click "Generate" to co-create a new version of the narrative with Gemini AI!
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-purple-200 flex items-center justify-between">
+                            <button onclick="speakText(document.getElementById('aiStoryOutput').innerText)" class="text-xs text-purple-700 font-bold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high"></i> Listen to AI Story
+                            </button>
+                            <button onclick="copyToClipboard(document.getElementById('aiStoryOutput').innerText)" class="text-xs bg-purple-200 hover:bg-purple-300 text-purple-800 px-3 py-1 rounded-lg font-semibold transition">
+                                <i class="fa-regular fa-copy"></i> Copy Text
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GUIDE MODAL -->
+    <div id="guideModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 card-element">
+            <div class="flex items-center justify-between mb-4 border-b pb-3">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-indigo-600"></i> How to Play & Learn
+                </h3>
+                <button onclick="closeModal('guideModal')" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <p><strong>1. Stage 1 (Generic Structure):</strong> Drag or select the correct narrative phase (*Orientation, Complication, Resolution, Coda*) for each paragraph.</p>
+                <p><strong>2. Stage 2 (Grammar Hunt):</strong> Find past tense verbs and action verbs directly inside the story text.</p>
+                <p><strong>3. Stage 3 (Kebinekaan Value):</strong> Answer ethics and empathy questions to collect Kebinekaan Stars.</p>
+                <p><strong>4. Stage 4 (AI Story Weaver):</strong> Transform classic folklores into inclusive, forgiving tales using Gemini AI.</p>
+                <p class="pt-2 text-indigo-600 font-semibold border-t">PID Features: Adjust fonts, high contrast, and use Audio Text-to-Speech anytime from the top bar!</p>
+            </div>
+            <div class="mt-5 text-right">
+                <button onclick="closeModal('guideModal')" class="px-4 py-2 bg-indigo-600 text-white rounded-xl font-bold text-xs">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        /* FOLKLORE DATABASE */
+        const FOLKLORE_DATA = {
+            toba: {
+                title: "The Legend of Lake Toba",
+                region: "North Sumatra",
+                summary: "A story of a farmer named Toba who broke a sacred promise to his fish-turned-human wife, reminding us of the value of trust and respect.",
+                paragraphs: [
+                    {
+                        text: "Once upon a time in North Sumatra, there lived a hard-working young farmer named Toba in a quiet valley.",
+                        correctStage: "Orientation"
+                    },
+                    {
+                        text: "One day, Toba caught a magical golden fish that transformed into a beautiful woman. They married under one condition: Toba must never reveal her origin to anyone.",
+                        correctStage: "Orientation"
+                    },
+                    {
+                        text: "Years later, during a moment of anger, Toba shouted at his son Samosir and broke his promise by calling him 'the son of a fish'.",
+                        correctStage: "Complication"
+                    },
+                    {
+                        text: "A huge disaster struck! Water flooded the entire valley until it formed the magnificent Lake Toba, and Samosir became the island in the middle.",
+                        correctStage: "Resolution"
+                    },
+                    {
+                        text: "Moral Value: We must respect our promises, appreciate diversity, and control our anger toward loved ones.",
+                        correctStage: "Coda"
+                    }
+                ],
+                grammarStory: "Toba worked hard in his field every single day. Yesterday, he walked towards the river and caught a golden fish. The fish suddenly spoke with a gentle voice. Toba promised to keep her secret and lived happily for years.",
+                verbs: ["worked", "walked", "caught", "spoke", "promised", "lived"],
+                moralQuestions: [
+                    {
+                        q: "Why is keeping promises important in a multicultural society?",
+                        options: ["It builds trust between different people", "It makes people rich", "It is just an ancient rule"],
+                        answer: 0
+                    },
+                    {
+                        q: "How should Toba have handled his anger towards Samosir inclusively?",
+                        options: ["By punishing him severely", "By communicating calmly with empathy", "By ignoring him forever"],
+                        answer: 1
+                    },
+                    {
+                        q: "What cultural value does Lake Toba teach us?",
+                        options: ["Harsh punishment", "Harmony with nature and family respect", "Selfishness"],
+                        answer: 1
+                    }
+                ]
+            },
+            malin: {
+                title: "The Legend of Malin Kundang",
+                region: "West Sumatra",
+                summary: "A tragic story about a son who denied his poor mother after gaining wealth, teaching filial piety and humility.",
+                paragraphs: [
+                    {
+                        text: "Long ago on the coast of West Sumatra, a poor boy named Malin Kundang lived with his loving mother in a small village.",
+                        correctStage: "Orientation"
+                    },
+                    {
+                        text: "Malin left his village to sail across the ocean. After many years, he became a wealthy merchant with a grand ship and a rich wife.",
+                        correctStage: "Complication"
+                    },
+                    {
+                        text: "When Malin returned, he felt ashamed of his old poor mother and turned his back on her, refusing to acknowledge her.",
+                        correctStage: "Complication"
+                    },
+                    {
+                        text: "Heartbroken, the mother prayed for justice. A violent storm destroyed Malin's ship, turning him into stone on the beach.",
+                        correctStage: "Resolution"
+                    },
+                    {
+                        text: "Moral Value: Respect your elders and never look down on anyone regardless of their economic background.",
+                        correctStage: "Coda"
+                    }
+                ],
+                grammarStory: "Malin sailed across the deep sea and reached a prosperous kingdom. He gathered immense wealth and married a noble lady. When his mother called his name, he denied her and shouted harshly.",
+                verbs: ["sailed", "reached", "gathered", "married", "called", "denied", "shouted"],
+                moralQuestions: [
+                    {
+                        q: "Why is treating family and elders with dignity essential in PID?",
+                        options: ["Because wealth is more important", "Because everyone deserves dignity regardless of social status", "Because it is required by law"],
+                        answer: 1
+                    },
+                    {
+                        q: "How can we avoid Malin's mistake of pride in modern school life?",
+                        options: ["By respecting classmates from all socio-economic backgrounds", "By boasting about our possessions", "By isolating ourselves"],
+                        answer: 0
+                    },
+                    {
+                        q: "What does the stone of Malin Kundang symbolize?",
+                        options: ["The danger of arrogance and lack of empathy", "A beautiful monument", "A navigation guide"],
+                        answer: 0
+                    }
+                ]
+            },
+            timun: {
+                title: "The Story of Timun Mas",
+                region: "Central Java",
+                summary: "A brave girl who used her courage and clever tools to escape a giant, showing bravery and perseverance.",
+                paragraphs: [
+                    {
+                        text: "In Central Java, an old widow named Mbok Srini prayed for a child and received a golden cucumber containing a baby named Timun Mas.",
+                        correctStage: "Orientation"
+                    },
+                    {
+                        text: "A giant named Buto Ijo demanded to take Timun Mas when she turned seventeen as agreed in a pact.",
+                        correctStage: "Complication"
+                    },
+                    {
+                        text: "Timun Mas ran into the forest carrying magic seeds, salt, needles, and shrimp paste given by a wise hermit.",
+                        correctStage: "Complication"
+                    },
+                    {
+                        text: "By throwing the magic items, she created a muddy lake that swallowed Buto Ijo, saving her life.",
+                        correctStage: "Resolution"
+                    },
+                    {
+                        text: "Moral Value: Courage, wisdom, and resourcefulness can overcome immense hardship.",
+                        correctStage: "Coda"
+                    }
+                ],
+                grammarStory: "Timun Mas ran swiftly through the dense jungle. She threw the magical salt behind her back, turning the ground into a roaring sea. She defeated the giant with her bravery.",
+                verbs: ["ran", "threw", "turning", "defeated"],
+                moralQuestions: [
+                    {
+                        q: "How does Timun Mas demonstrate empowerment and resilience?",
+                        options: ["She relied solely on others", "She used her mind, courage, and resources bravely", "She gave up immediately"],
+                        answer: 1
+                    },
+                    {
+                        q: "What does the hermit's help symbolize in an inclusive community?",
+                        options: ["Community support and guidance for youth", "Magic tricks", "Solitude"],
+                        answer: 0
+                    },
+                    {
+                        q: "How can we support friends facing big challenges in school?",
+                        options: ["By offering encouragement and inclusive help", "By ignoring them", "By criticizing them"],
+                        answer: 0
+                    }
+                ]
+            }
+        };
+
+        /* GAME STATE VARIABLES */
+        let currentFolkloreKey = 'toba';
+        let currentScore = 0;
+        let starsCount = 0;
+        let selectedStage1Answers = {};
+        let selectedVerbs = new Set();
+        let isHighContrast = false;
+        let isDyslexicFont = false;
+
+        window.onload = function() {
+            switchFolklore();
+            updateScoreUI();
+        };
+
+        function switchFolklore() {
+            currentFolkloreKey = document.getElementById('folkloreSelect').value;
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            
+            document.getElementById('folkloreRegion').innerText = data.region;
+            document.getElementById('folkloreSummary').innerText = data.summary;
+
+            renderStage1();
+            renderStage2();
+            renderStage3();
+        }
+
+        function switchStage(stageNum) {
+            document.querySelectorAll('.stage-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.stage-tab').forEach(el => {
+                el.classList.remove('active', 'border-indigo-500');
+                el.classList.add('border-transparent');
+            });
+
+            document.getElementById(`stage${stageNum}Content`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tabStage${stageNum}`);
+            activeTab.classList.add('active', 'border-indigo-500');
+            activeTab.classList.remove('border-transparent');
+        }
+
+        function renderStage1() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            const container = document.getElementById('paragraphMatchContainer');
+            container.innerHTML = '';
+            selectedStage1Answers = {};
+
+            const stagesList = ["Orientation", "Complication", "Resolution", "Coda"];
+
+            data.paragraphs.forEach((p, index) => {
+                const card = document.createElement('div');
+                card.className = "p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4 card-element";
+                
+                card.innerHTML = `
+                    <div class="flex-1">
+                        <span class="text-[10px] font-extrabold text-indigo-500 uppercase tracking-wider block mb-1">Paragraph ${index + 1}</span>
+                        <p class="text-sm text-slate-800 leading-relaxed">${p.text}</p>
+                    </div>
+                    <div class="min-w-[180px]">
+                        <select onchange="recordStage1Answer(${index}, this.value)" class="w-full p-2 bg-white text-slate-800 border border-slate-300 rounded-lg text-xs font-semibold outline-none focus:ring-2 focus:ring-indigo-400">
+                            <option value="">-- Choose Stage --</option>
+                            ${stagesList.map(s => `<option value="${s}">${s}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function recordStage1Answer(index, value) {
+            selectedStage1Answers[index] = value;
+        }
+
+        function checkStage1Answers() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            let correctCount = 0;
+
+            data.paragraphs.forEach((p, index) => {
+                if (selectedStage1Answers[index] === p.correctStage) {
+                    correctCount++;
+                }
+            });
+
+            if (correctCount === data.paragraphs.length) {
+                addPoints(50);
+                addStar();
+                showToast("Splendid! All generic structure stages matched perfectly! +50 Points", "success");
+            } else {
+                showToast(`You got ${correctCount} out of ${data.paragraphs.length} correct. Try reviewing the story flow!`, "info");
+            }
+        }
+
+        function renderStage2() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            const box = document.getElementById('grammarInteractiveBox');
+            box.innerHTML = '';
+            selectedVerbs.clear();
+
+            document.getElementById('verbCounter').innerText = '0';
+            document.getElementById('verbTarget').innerText = data.verbs.length;
+
+            const words = data.grammarStory.split(' ');
+
+            words.forEach((word, wIdx) => {
+                const cleanWord = word.replace(/[^a-zA-Z]/g, '').toLowerCase();
+                const span = document.createElement('span');
+                span.innerText = word + ' ';
+                span.className = "cursor-pointer hover:bg-amber-100 rounded px-1 transition duration-150 inline-block";
+                
+                span.onclick = function() {
+                    if (data.verbs.includes(cleanWord)) {
+                        span.className = "bg-emerald-300 text-slate-900 font-bold rounded px-1 inline-block";
+                        if (!selectedVerbs.has(cleanWord)) {
+                            selectedVerbs.add(cleanWord);
+                            document.getElementById('verbCounter').innerText = selectedVerbs.size;
+                            showToast(`Action Verb Found: "${cleanWord}"!`, "success");
+                        }
+                    } else {
+                        span.className = "bg-rose-300 text-slate-900 rounded px-1 inline-block";
+                        showToast(`"${cleanWord}" is not a past action verb in this target set.`, "warning");
+                    }
+                };
+
+                box.appendChild(span);
+            });
+        }
+
+        function checkStage2Grammar() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            if (selectedVerbs.size >= Math.ceil(data.verbs.length * 0.7)) {
+                addPoints(40);
+                addStar();
+                showToast("Grammar Mastery Achieved! Excellent action verb identification. +40 Points", "success");
+            } else {
+                showToast("Keep searching! Look for words describing past actions (e.g. worked, sailed, ran).", "info");
+            }
+        }
+
+        function renderStage3() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            const container = document.getElementById('moralQuestionCards');
+            container.innerHTML = '';
+
+            data.moralQuestions.forEach((mq, idx) => {
+                const card = document.createElement('div');
+                card.className = "p-4 bg-slate-50 rounded-xl border border-slate-200 card-element flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <span class="text-[10px] font-bold text-rose-500 uppercase tracking-wider block mb-1">Ethical Question ${idx+1}</span>
+                        <p class="text-xs font-bold text-slate-800 mb-3">${mq.q}</p>
+                        <div class="space-y-1.5">
+                            ${mq.options.map((opt, oIdx) => `
+                                <button onclick="checkMoralOption(${idx}, ${oIdx}, ${mq.answer}, this)" class="w-full text-left p-2 rounded-lg border border-slate-200 text-xs hover:bg-rose-50 hover:border-rose-300 transition">
+                                    ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkMoralOption(qIdx, optIdx, correctIdx, btnEl) {
+            if (optIdx === correctIdx) {
+                btnEl.className = "w-full text-left p-2 rounded-lg bg-emerald-100 border border-emerald-400 text-emerald-800 text-xs font-bold";
+                addPoints(20);
+                showToast("Inclusive Insight Confirmed! +20 Points", "success");
+            } else {
+                btnEl.className = "w-full text-left p-2 rounded-lg bg-rose-100 border border-rose-400 text-rose-800 text-xs";
+                showToast("Consider the option that promotes empathy and mutual respect.", "warning");
+            }
+        }
+
+        function submitReflection() {
+            const text = document.getElementById('studentReflection').value.trim();
+            if (text.length > 15) {
+                addPoints(30);
+                addStar();
+                showToast("Reflection Submitted! Your inclusive thought is saved. +30 Points", "success");
+            } else {
+                showToast("Please write a slightly longer reflection (at least 2 sentences).", "info");
+            }
+        }
+
+        async function generateAIInclusiveEnding() {
+            const folkloreData = FOLKLORE_DATA[currentFolkloreKey];
+            const theme = document.getElementById('aiThemeSelect').value;
+            const customIdea = document.getElementById('aiCustomPrompt').value.trim();
+            const outputEl = document.getElementById('aiStoryOutput');
+            const btnEl = document.getElementById('btnGenerateAI');
+
+            btnEl.disabled = true;
+            btnEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating Inclusive Tale...`;
+            outputEl.innerHTML = `<span class="animate-pulse">Gemini AI is weaving a new inclusive narrative ending... Please wait...</span>`;
+
+            const promptText = `Act as an expert English teacher for Senior High School (Class XII) in Indonesia. 
+            Rewrite a short alternative resolution (3-4 sentences in simple past tense) for the legend "${folkloreData.title}".
+            Make the resolution focus on: "${theme}". 
+            Additional student plot idea: "${customIdea || 'None'}".
+            Ensure it teaches Pendidikan Inklusif dan Kebinekaan (PID) values like forgiveness, tolerance, and respect.`;
+
+            const apiKey = ""; // Canvas runtime injection
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }]
+                    })
+                });
+
+                const result = await response.json();
+                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (aiText) {
+                    outputEl.innerText = aiText;
+                    addPoints(50);
+                    showToast("New Inclusive Legend Ending Created! +50 Points", "success");
+                } else {
+                    outputEl.innerText = "Instead of harsh punishment, the characters reconciled through dialogue, embracing each other's differences and restoring peace in the village.";
+                }
+            } catch (err) {
+                outputEl.innerText = "Instead of turning into stone, Malin Kundang sincerely apologized to his mother. They forgave each other, demonstrating the power of empathy and family acceptance.";
+            } finally {
+                btnEl.disabled = false;
+                btnEl.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Generate Inclusive Story Version`;
+            }
+        }
+
+        function changeFontSize(size) {
+            const body = document.getElementById('mainBody');
+            body.classList.remove('text-size-sm', 'text-size-md', 'text-size-lg', 'text-size-xl');
+            body.classList.add(`text-size-${size}`);
+            showToast(`Font Size adjusted to: ${size.toUpperCase()}`, 'info');
+        }
+
+        function toggleDyslexiaFont() {
+            isDyslexicFont = !isDyslexicFont;
+            const body = document.getElementById('mainBody');
+            const btn = document.getElementById('dyslexiaBtn');
+            
+            if (isDyslexicFont) {
+                body.classList.add('dyslexia-font');
+                btn.classList.add('bg-indigo-600', 'text-white');
+                showToast("Dyslexic-Friendly Font Activated", "info");
+            } else {
+                body.classList.remove('dyslexia-font');
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                showToast("Standard Font Activated", "info");
+            }
+        }
+
+        function toggleHighContrast() {
+            isHighContrast = !isHighContrast;
+            const body = document.getElementById('mainBody');
+            const btn = document.getElementById('contrastBtn');
+
+            if (isHighContrast) {
+                body.classList.add('high-contrast');
+                btn.classList.add('bg-amber-500', 'text-black');
+                showToast("High Contrast Mode Enabled", "info");
+            } else {
+                body.classList.remove('high-contrast');
+                btn.classList.remove('bg-amber-500', 'text-black');
+                showToast("High Contrast Mode Disabled", "info");
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+                showToast("Audio Playing...", "info");
+            } else {
+                showToast("Speech Synthesis not supported on this browser.", "warning");
+            }
+        }
+
+        function toggleTextToSpeech() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            speakText(data.summary);
+        }
+
+        function speakCurrentStageStory() {
+            const data = FOLKLORE_DATA[currentFolkloreKey];
+            const fullStory = data.paragraphs.map(p => p.text).join(' ');
+            speakText(fullStory);
+        }
+
+        function startSpeechToText() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.onstart = () => showToast("Listening... Speak your reflection in English", "info");
+                recognition.onresult = (e) => {
+                    document.getElementById('studentReflection').value = e.results[0][0].transcript;
+                    showToast("Speech transcribed successfully!", "success");
+                };
+                recognition.start();
+            } else {
+                showToast("Speech-to-Text is not supported on this browser.", "warning");
+            }
+        }
+
+        function addPoints(pts) {
+            currentScore += pts;
+            updateScoreUI();
+        }
+
+        function addStar() {
+            if (starsCount < 3) {
+                starsCount++;
+                const container = document.getElementById('starContainer');
+                container.children[starsCount - 1].className = "fa-solid fa-star text-amber-400";
+            }
+        }
+
+        function updateScoreUI() {
+            document.getElementById('scoreDisplay').innerText = currentScore;
+            
+            const badgeEl = document.getElementById('badgeText');
+            if (currentScore >= 120) {
+                badgeEl.innerText = "Kebinekaan Ambassador 🏆";
+            } else if (currentScore >= 60) {
+                badgeEl.innerText = "Narrative Scholar 📜";
+            } else {
+                badgeEl.innerText = "Cultural Explorer 🌟";
+            }
+        }
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bg = "bg-slate-800 text-white";
+            if (type === "success") bg = "bg-emerald-600 text-white";
+            if (type === "warning") bg = "bg-amber-600 text-white";
+
+            toast.className = `${bg} px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2 transition duration-300 transform translate-y-2 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function copyToClipboard(text) {
+            const temp = document.createElement("textarea");
+            document.body.appendChild(temp);
+            temp.value = text;
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+            showToast("Copied to clipboard!", "success");
+        }
+    </script>
+</body>
+</html>
